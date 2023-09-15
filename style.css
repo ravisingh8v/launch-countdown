@@ -1,0 +1,309 @@
+@import url("https://fonts.googleapis.com/css2?family=Courgette&family=Poppins:wght@100;200;300;400;500;600;700;800&family=Raleway:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200&family=Red+Hat+Text:ital,wght@0,300;0,500;0,600;0,700;1,400&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  font-family: "Red Hat Text", sans-serif;
+  background: #211e2a;
+  user-select: none;
+}
+
+/* utils  */
+.primary-text {
+  color: hsl(345, 95%, 68%);
+}
+.primary-bg {
+  background-color: hsl(236, 21%, 26%);
+}
+.secondary-bg {
+  background-color: hsl(235, 16%, 14%);
+}
+
+/* Backgrounds  */
+body::before {
+  content: " ";
+  background: url("images/bg-stars.svg");
+  position: absolute;
+  background-size: contain;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+body::after {
+  content: " ";
+  position: absolute;
+  background: url("./images/pattern-hills.svg");
+  background-position: bottom center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+}
+
+@media only screen and (max-width: 1000px) {
+  body::after {
+    background-size: auto;
+  }
+}
+@media only screen and (max-width: 400px) {
+  body::after {
+    background-position: bottom right;
+  }
+}
+
+/* main */
+.icon {
+  fill: #8385a9;
+  color: #8385a9;
+  cursor: pointer;
+}
+.set-timer-container {
+  width: 300px;
+}
+.set-timer-container .icon {
+  transition: transform 0.2s linear;
+}
+.set-timer-container .icon:hover {
+  color: hsl(345, 95%, 68%);
+  transform: rotate(45deg);
+}
+/* .set-timer-container .icon:active {
+  color: #8385a9;
+  transform: rotate(45deg);
+} */
+
+#overlay {
+  display: none;
+}
+.overlay {
+  visibility: hidden;
+  background-color: hsl(236, 21%, 26%);
+  /* border: 1px solid hsl(345, 95%, 68%); */
+  border-radius: 5px;
+}
+#overlay:checked ~ .overlay {
+  visibility: visible;
+}
+#overlay:checked + #setting {
+  color: hsl(345, 95%, 68%);
+}
+
+.heading {
+  margin-left: 10px;
+  letter-spacing: 10px;
+  font-size: 30px;
+}
+
+.item {
+  margin-inline: 10px;
+}
+
+.timer {
+  height: 150px;
+  width: 150px;
+  font-size: 75px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  box-shadow: 0px 12px 8px -3px rgba(0, 0, 0, 0.59);
+  -webkit-box-shadow: 0px 12px 8px -3px rgba(0, 0, 0, 0.59);
+  -moz-box-shadow: 0px 12px 8px -3px rgba(0, 0, 0, 0.59);
+}
+
+/* description on timer (seconds, hours etc. ) */
+.timer-type {
+  margin-top: 15px;
+  font-size: 12px;
+  margin-left: 10px;
+  letter-spacing: 10px;
+}
+@media (max-width: 768px) {
+  .timer {
+    height: 80px;
+    width: 80px;
+    font-size: 45px;
+  }
+  .timer-type {
+    font-size: 6px;
+    margin-left: 5px;
+    letter-spacing: 5px;
+  }
+}
+@media (max-width: 430px) {
+  .heading {
+    font-size: 25px;
+  }
+  .timer {
+    height: 50px;
+    width: 50px;
+    font-size: 22px;
+  }
+  .timer-type {
+    font-size: 6px;
+    margin-left: 2px;
+    letter-spacing: 2px;
+    margin-top: 10px;
+  }
+}
+
+/* flip div style  */
+.timer-flip {
+  position: absolute;
+  width: 100%;
+  top: 0%; /*have to change it to 50% when applying animation */
+  height: 50%;
+  background-color: hsl(235, 16%, 14%);
+  opacity: 0.3;
+}
+/* to animate the flip effect */
+.animate {
+  animation-name: flip;
+  animation-duration: 1s;
+  /* box-shadow: 0px 12px 8px -3px rgba(0, 0, 0, 0.59); */
+  animation-timing-function: ease-in-out;
+}
+.animate-second {
+  animation-iteration-count: infinite;
+}
+.animate-normal {
+  animation-duration: 1s;
+  animation-iteration-count: unset;
+}
+
+/* @keyframes flip { */
+@keyframes flip {
+  0% {
+    transform: rotateX(180deg);
+    transform-origin: 100% 0%;
+  }
+  95% {
+    transform: rotateX(0deg);
+    transform-origin: 100% 0%;
+  }
+  100% {
+    transform: rotateX(180deg);
+    transform-origin: 100% 0%;
+  }
+}
+
+/* footer  */
+svg {
+  margin-inline: 10px;
+}
+footer {
+  font-size: 10px;
+}
+
+/* classes apply when the launch complete */
+#smokes {
+  position: fixed;
+  visibility: hidden;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.smoke {
+  position: absolute;
+  bottom: 0;
+  height: 400px;
+  width: 100%;
+  background-size: contain;
+  animation: cloud 5s infinite, entry 12s 1;
+  /* animation-iteration-count: infinite; */
+  transform: translateY(200px);
+}
+@keyframes entry {
+  0% {
+    transform: translateY(200px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(200px);
+  }
+}
+
+@keyframes cloud {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/* different smokes  */
+.smoke-1 {
+  background: url(https://raw.githubusercontent.com/SochavaAG/example-mycode/master/pens/smoke/images/smoke-2-1.png)
+    no-repeat;
+  background-position: left bottom;
+}
+.smoke-4 {
+  background: url(https://raw.githubusercontent.com/SochavaAG/example-mycode/master/pens/smoke/images/smoke-2-1.png)
+    no-repeat;
+  background-position: center bottom;
+}
+.smoke-2 {
+  background: url(https://raw.githubusercontent.com/SochavaAG/example-mycode/master/pens/smoke/images/smoke-2-2.png)
+    no-repeat;
+  background-position: right bottom;
+}
+.smoke-3 {
+  background: url(https://raw.githubusercontent.com/SochavaAG/example-mycode/master/pens/smoke/images/smoke-2-3.png)
+    no-repeat;
+  background-position: center bottom;
+}
+
+/* rocket animation  */
+.rocket {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 100%;
+  height: 50%;
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+}
+.rocket-animate {
+  animation-name: rocket;
+  animation-duration: 10s;
+  animation-iteration-count: 1;
+}
+.rocket img {
+  height: 100%;
+  width: auto;
+}
+@keyframes rocket {
+  0% {
+    top: 100%;
+  }
+
+  100% {
+    top: -100%;
+  }
+}
