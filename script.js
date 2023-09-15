@@ -42,6 +42,13 @@ function setLaunchTime(event) {
     // const getLunchTime = localStorage.getItem("date-time");
     const formattedDate = convertUserInputTime(date + " " + time);
     if (Date.parse(formattedDate) >= Date.parse(new Date())) {
+      // resetting rocket launch effect
+      smoke.classList.remove("visible");
+      smokeItem.forEach((res) => {
+        res.classList.remove("smoke");
+      });
+      rocket.classList.remove("rocket-animate");
+
       isOverlayVisible = false;
       overlay.classList.add("invisible");
       localStorage.setItem("date-time", formattedDate);
@@ -112,11 +119,11 @@ const smokeItem = document.querySelectorAll(".smoke-item");
 const rocket = document.querySelector(".rocket");
 
 // resetting the launch effect
-// smoke.classList.remove("visible");
-// smokeItem.forEach((res) => {
-//   res.classList.remove("smoke");
-// });
-// rocket.classList.remove("rocket-animate");
+smoke.classList.remove("visible");
+smokeItem.forEach((res) => {
+  res.classList.remove("smoke");
+});
+rocket.classList.remove("rocket-animate");
 
 // calling the launcher countDown every second to get new time
 let interval;
