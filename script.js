@@ -1,3 +1,19 @@
+// when user select the input
+const months = [
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
+];
+
 // getting dom element to set time in DOM
 const daysElem = document.getElementById("days");
 const hoursElem = document.getElementById("hours");
@@ -19,20 +35,31 @@ function setLaunchTime(event) {
   event.preventDefault();
   const date = event.target[0].value;
   const time = event.target[1].value;
+
   if (!date || !time) {
     alert("you have to fill all the input first");
   } else {
-    console.log(date, time);
-    localStorage.setItem("date-time", date + " " + time);
-    launchCountDownStart("hey");
+    // const getLunchTime = localStorage.getItem("date-time");
+    const formattedDate = convertUserInputTime(date + " " + time);
+    if (Date.parse(formattedDate) >= Date.parse(new Date())) {
+      isOverlayVisible = false;
+      overlay.classList.add("invisible");
+      localStorage.setItem("date-time", formattedDate);
+      clearInterval(interval);
+      flipSeconds.classList.remove(...animateFlipClass);
+      launchCountDownStart(formattedDate);
+    } else {
+      alert(
+        "you cant set previous dates as a launch time please set upcoming dates"
+      );
+    }
+    // console.log(event);
   }
 }
 
 function launchCountdown(endTime) {
   // here to set the launch date
-  const setLaunchingDate =
-    Date.parse("september 14,2023 16:30:00") - Date.parse(new Date());
-
+  const setLaunchingDate = Date.parse(endTime) - Date.parse(new Date());
   if (setLaunchingDate >= 0) {
     // converting the date that we get from parse in to days, hour, second and minutes
     const launchRemainingDays = convertToDoubleDigit(
@@ -78,23 +105,23 @@ function launchCountdown(endTime) {
   }
   return setLaunchingDate < 1;
 }
-// to set 0 in single digit number
-function convertToDoubleDigit(number) {
-  if (number < 10) {
-    return "0" + number;
-  } else {
-    return number.toString();
-  }
-}
 
 // getting Element to show them when the timer completed
 const smoke = document.getElementById("smokes");
 const smokeItem = document.querySelectorAll(".smoke-item");
 const rocket = document.querySelector(".rocket");
 
+// resetting the launch effect
+// smoke.classList.remove("visible");
+// smokeItem.forEach((res) => {
+//   res.classList.remove("smoke");
+// });
+// rocket.classList.remove("rocket-animate");
+
 // calling the launcher countDown every second to get new time
+let interval;
 function launchCountDownStart(endTime) {
-  const interval = setInterval(() => {
+  interval = setInterval(() => {
     // calling the launcher countDown
     const countDown = launchCountdown(endTime);
 
@@ -118,6 +145,119 @@ function launchCountDownStart(endTime) {
     }
   }, 1000);
 }
+
+// On Init
+const getLunchTime = localStorage.getItem("date-time");
+// if (getLunchTime) {
+if (getLunchTime && Date.parse(getLunchTime) >= Date.parse(new Date())) {
+  launchCountDownStart(getLunchTime);
+} else {
+  launchCountDownStart("december 20,2023 13:30:60");
+}
+// }
+//  else {
+//   launchCountDownStart("december 20,2023 13:30:60");
+// }
+
+// ================== helper functions ====================
+
+// converting input time to parsing form
+function convertUserInputTime(getLunchTime) {
+  const date = getLunchTime.split(" ")[0].split("-");
+  const time = getLunchTime.split(" ")[1] + ":" + "00";
+  const formattedDate =
+    months[+date[1] - 1] + " " + date[2] + ", " + date[0] + " " + time;
+  return formattedDate;
+}
+
+// to set 0 in single digit number
+function convertToDoubleDigit(number) {
+  if (number < 10) {
+    return "0" + number;
+  } else {
+    return number.toString();
+  }
+}
+
+const overlay = document.querySelector(".overlay");
+let isOverlayVisible = false;
+function toggleOverlay() {
+  isOverlayVisible = !isOverlayVisible;
+  if (!isOverlayVisible) {
+    overlay.classList.add("invisible");
+  } else {
+    overlay.classList.remove("invisible");
+  }
+}
+
+// driver js
+
+const driver = window.driver.js.driver;
+
+const driverObj = driver();
+
+function highlightTour() {
+  driverObj.setConfig({
+    stagePadding: 5,
+    disableActiveInteraction: true,
+    onDeselected() {
+      localStorage.setItem("highlightTour", "true");
+    },
+    // Animation: false,
+  });
+
+  driverObj.highlight({
+    element: "#setting",
+    popover: {
+      title: "Set Launch Time",
+      description: "You can set new launch time from here",
+    },
+  });
+}
+
+if (!localStorage.getItem("highlightTour")) {
+  highlightTour();
+}
+
+function startTour() {
+  driverObj.destroy();
+
+  if (!localStorage.getItem("setLaunchTour")) {
+    driver({
+      showProgress: true,
+      stagePadding: 3,
+      allowClose: false,
+      steps: [
+        {
+          element: "#date",
+          popover: {
+            title: "Date",
+            description: "Select date, When you are going to launch ",
+          },
+        },
+        {
+          element: "#time",
+          popover: {
+            title: "Time",
+            description: "Select time, When you are going to launch ",
+          },
+        },
+        {
+          element: "#submit",
+          popover: {
+            title: "Submit",
+            description: "Set Selected launch time and start Countdown",
+            onNextClick(element, step, opts) {
+              driver().moveNext();
+              localStorage.setItem("setLaunchTour", "true");
+            },
+          },
+        },
+      ],
+    }).drive();
+  }
+}
+
 //-------------- previous tries -----------------
 
 // let setSeconds = "10";

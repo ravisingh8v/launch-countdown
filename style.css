@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Courgette&family=Poppins:wght@100;200;300;400;500;600;700;800&family=Raleway:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200&family=Red+Hat+Text:ital,wght@0,300;0,500;0,600;0,700;1,400&display=swap");
+/* @import "driver.js/dist/driver.css"; */
 * {
   margin: 0;
   padding: 0;
@@ -7,6 +8,7 @@
 html,
 body {
   height: 100%;
+  width: 100%;
 }
 body {
   font-family: "Red Hat Text", sans-serif;
@@ -14,6 +16,9 @@ body {
   user-select: none;
 }
 
+input {
+  cursor: pointer;
+}
 /* utils  */
 .primary-text {
   color: hsl(345, 95%, 68%);
@@ -71,13 +76,14 @@ body::after {
 }
 .set-timer-container {
   width: 300px;
+  z-index: 1000;
 }
 .set-timer-container .icon {
   transition: transform 0.2s linear;
 }
 .set-timer-container .icon:hover {
   color: hsl(345, 95%, 68%);
-  transform: rotate(45deg);
+  transform: rotate(65deg);
 }
 /* .set-timer-container .icon:active {
   color: #8385a9;
@@ -88,14 +94,14 @@ body::after {
   display: none;
 }
 .overlay {
-  visibility: hidden;
+  /* visibility: hidden; */
   background-color: hsl(236, 21%, 26%);
   /* border: 1px solid hsl(345, 95%, 68%); */
   border-radius: 5px;
 }
-#overlay:checked ~ .overlay {
+/* #overlay:checked ~ .overlay {
   visibility: visible;
-}
+} */
 #overlay:checked + #setting {
   color: hsl(345, 95%, 68%);
 }
@@ -119,9 +125,36 @@ body::after {
   justify-content: center;
   align-items: center;
   font-weight: 700;
-  box-shadow: 0px 12px 8px -3px rgba(0, 0, 0, 0.59);
-  -webkit-box-shadow: 0px 12px 8px -3px rgba(0, 0, 0, 0.59);
-  -moz-box-shadow: 0px 12px 8px -3px rgba(0, 0, 0, 0.59);
+  box-shadow: 1px 12px 3px -1px rgba(0, 0, 0, 0.43);
+  -webkit-box-shadow: 1px 12px 3px -1px rgba(0, 0, 0, 0.43);
+  -moz-box-shadow: 1px 12px 3px -1px rgba(0, 0, 0, 0.43);
+  overflow: hidden;
+}
+.timer::before {
+  content: "";
+  position: absolute;
+  /* border: 6px solid rgba(0, 0, 0, 0.43); */
+  background-color: rgba(0, 0, 0, 0.63);
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  opacity: 0.8;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -6px;
+}
+.timer::after {
+  content: "";
+  position: absolute;
+  /* border: 6px solid rgba(0, 0, 0, 0.73); */
+  background-color: rgba(0, 0, 0, 0.63);
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  opacity: 0.8;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -6px;
 }
 
 /* description on timer (seconds, hours etc. ) */
@@ -136,6 +169,14 @@ body::after {
     height: 80px;
     width: 80px;
     font-size: 45px;
+    box-shadow: 1px 10px 3px -1px rgba(0, 0, 0, 0.43);
+    -webkit-box-shadow: 1px 10px 3px -1px rgba(0, 0, 0, 0.43);
+    -moz-box-shadow: 1px 10px 3px -1px rgba(0, 0, 0, 0.43);
+  }
+  .timer::after,
+  .timer::before {
+    height: 12px;
+    width: 12px;
   }
   .timer-type {
     font-size: 6px;
@@ -151,6 +192,14 @@ body::after {
     height: 50px;
     width: 50px;
     font-size: 22px;
+    box-shadow: 1px 8px 3px -1px rgba(0, 0, 0, 0.43);
+    -webkit-box-shadow: 1px 8px 3px -1px rgba(0, 0, 0, 0.43);
+    -moz-box-shadow: 1px 8px 3px -1px rgba(0, 0, 0, 0.43);
+  }
+  .timer::after,
+  .timer::before {
+    height: 10px;
+    width: 10px;
   }
   .timer-type {
     font-size: 6px;
@@ -201,7 +250,7 @@ body::after {
 }
 
 /* footer  */
-svg {
+.social-link {
   margin-inline: 10px;
 }
 footer {
@@ -232,13 +281,13 @@ footer {
 }
 @keyframes entry {
   0% {
-    transform: translateY(200px);
+    transform: translateY(220px);
   }
   50% {
     transform: translateY(0);
   }
   100% {
-    transform: translateY(200px);
+    transform: translateY(220px);
   }
 }
 
@@ -252,6 +301,7 @@ footer {
   50% {
     opacity: 0.4;
   }
+
   100% {
     opacity: 1;
   }
