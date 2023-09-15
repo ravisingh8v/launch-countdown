@@ -19,9 +19,7 @@ body {
 input {
   cursor: pointer;
 }
-input::placeholder {
-  color: #211e2a;
-}
+
 /* utils  */
 .primary-text {
   color: hsl(345, 95%, 68%);
