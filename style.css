@@ -131,6 +131,7 @@ body::after {
   -moz-box-shadow: 1px 12px 3px -1px rgba(0, 0, 0, 0.43);
   overflow: hidden;
 }
+
 .timer::before {
   content: "";
   position: absolute;
