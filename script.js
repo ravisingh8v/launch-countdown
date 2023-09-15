@@ -216,7 +216,9 @@ function highlightTour() {
 }
 
 if (!localStorage.getItem("highlightTour")) {
-  highlightTour();
+  setTimeout(() => {
+    highlightTour();
+  }, 500);
 }
 
 function startTour() {
