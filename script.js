@@ -76,6 +76,7 @@ function launchCountdown(endTime) {
   // here to set the launch date
   setLaunchingDate = Date.parse(endTime) - Date.parse(new Date());
   if (setLaunchingDate >= 0) {
+    alert("this one work");
     // converting the date that we get from parse in to days, hour, second and minutes
     const launchRemainingDays = convertToDoubleDigit(
       Math.floor(setLaunchingDate / (1000 * 60 * 60 * 24))
@@ -168,7 +169,7 @@ const getLunchTime = localStorage.getItem("date-time");
 if (getLunchTime && Date.parse(getLunchTime) >= Date.parse(new Date())) {
   launchCountDownStart(getLunchTime);
 } else {
-  alert("testing on production ");
+  // alert("testing on production ");
   launchCountDownStart("december 20,2023 13:30:60");
 }
 
