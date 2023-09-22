@@ -74,7 +74,7 @@ function setLaunchTime(event) {
 let setLaunchingDate;
 function launchCountdown(endTime) {
   // here to set the launch date
-  setLaunchingDate = Date.parse(endTime) - Date.parse(new Date());
+  setLaunchingDate = Number(Date.parse(endTime) - Date.parse(new Date()));
   alert(setLaunchingDate);
   if (setLaunchingDate >= 0) {
     // converting the date that we get from parse in to days, hour, second and minutes
