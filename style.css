@@ -219,7 +219,37 @@ body::after {
   height: 50%;
   background-color: hsl(235, 16%, 14%);
   opacity: 0.3;
+  overflow: hidden;
 }
+/* .forFlip {
+  position: absolute;
+  top: 50;
+  left: 0;
+  height: 100%;
+  transform: translateY(-50%) rotateX(180deg);
+  right: 0;
+  top: 20px;
+  display: flex;
+  justify-content: center;
+}
+@media (max-width: 768px) {
+  .forFlip {
+    top: 15px;
+  }
+}
+@media (max-width: 430px) {
+  .forFlip {
+    top: 3px;
+  }
+}
+.timer-flip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} */
+
 /* to animate the flip effect */
 .animate {
   animation-name: flip;
@@ -241,9 +271,12 @@ body::after {
     transform: rotateX(180deg);
     transform-origin: 100% 0%;
   }
-  95% {
+
+  99.5% {
+    /* background-color: hsl(236, 21%, 26%); */
     transform: rotateX(0deg);
     transform-origin: 100% 0%;
+    /* opacity: 1; */
   }
   100% {
     transform: rotateX(180deg);

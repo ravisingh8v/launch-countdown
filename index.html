@@ -81,17 +81,21 @@
             <form onsubmit="setLaunchTime(event)" action="" class="mt-2">
               <div>
                 <input
-                  type="date"
+                  type="text"
+                  onfocus="(this.type = 'date')"
+                  onblur="(this.type ='text')"
                   id="date"
-                  placeholder="select date"
+                  placeholder="Set Date"
                   class="form-control"
                 />
               </div>
               <div class="mt-2">
                 <input
-                  type="time"
+                  onfocus="(this.type = 'time')"
+                  onblur="(this.type ='text')"
+                  type="text"
                   id="time"
-                  placeholder="select time"
+                  placeholder="Set Time"
                   class="form-control"
                 />
               </div>
@@ -100,6 +104,7 @@
                 <button
                   type="submit"
                   id="submit"
+                  onclick=""
                   class="w-100 btn btn-primary mt-2"
                 >
                   Submit
@@ -139,9 +144,20 @@
             <span class="timer-type d-block text-center">MINUTES</span>
           </div>
           <!-- item-4 seconds  -->
+          <!-- <div class="d-flex flex-column align-items-center item item-4">
+            <div class="timer card border-0 primary-text primary-bg">
+              <div class="seconds timer-flip">
+                <div class="forFlip"></div>
+              </div>
+              <div id="seconds">00</div>
+            </div>
+            <span class="timer-type d-block text-center">SECONDS</span>
+          </div> -->
           <div class="d-flex flex-column align-items-center item item-4">
             <div class="timer card border-0 primary-text primary-bg">
-              <div class="seconds timer-flip"></div>
+              <div class="seconds timer-flip">
+                <div class="forFlip"></div>
+              </div>
               <div id="seconds">00</div>
             </div>
             <span class="timer-type d-block text-center">SECONDS</span>

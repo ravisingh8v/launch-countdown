@@ -42,6 +42,10 @@ function setLaunchTime(event) {
     // const getLunchTime = localStorage.getItem("date-time");
     const formattedDate = convertUserInputTime(date + " " + time);
     if (Date.parse(formattedDate) >= Date.parse(new Date())) {
+      // Clearing the tour when the form valid and tour is still there on submit
+      driverObj.destroy();
+      localStorage.setItem("setLaunchTour", "true");
+
       // resetting rocket launch effect
       smoke.classList.remove("visible");
       smokeItem.forEach((res) => {
@@ -49,10 +53,14 @@ function setLaunchTime(event) {
       });
       rocket.classList.remove("rocket-animate");
 
+      // closing the overlay after form submitting
       isOverlayVisible = false;
       overlay.classList.add("invisible");
+
+      // user inputted date set to local so if they refresh it wil count from there
       localStorage.setItem("date-time", formattedDate);
       clearInterval(interval);
+
       flipSeconds.classList.remove(...animateFlipClass);
       launchCountDownStart(formattedDate);
     } else {
@@ -85,6 +93,16 @@ function launchCountdown(endTime) {
     // setting the timer into DOM
     daysElem.innerHTML = `${launchRemainingDays}`;
 
+    // if (launchRemainingSecond > 0) {
+    //   const seconds = (document.querySelector(".forFlip").innerHTML =
+    //     launchRemainingSecond);
+    // }
+
+    // const cssRuleDays = `.days::after {
+    //   content:'${launchRemainingDays}'
+    // }`;
+
+    // days.style.content = launchRemainingDays;
     hoursElem.innerHTML = `${launchRemainingHour}`;
 
     minutesElem.innerHTML = `${launchRemainingMinutes}`;
@@ -179,11 +197,7 @@ function convertUserInputTime(getLunchTime) {
 
 // to set 0 in single digit number
 function convertToDoubleDigit(number) {
-  if (number < 10) {
-    return "0" + number;
-  } else {
-    return number.toString();
-  }
+  return number.toString().padStart(2, "0");
 }
 
 const overlay = document.querySelector(".overlay");
@@ -204,6 +218,7 @@ const driver = window.driver.js.driver;
 const driverObj = driver();
 
 function highlightTour() {
+  driverObj.destroy();
   driverObj.setConfig({
     stagePadding: 5,
     disableActiveInteraction: true,
@@ -230,41 +245,48 @@ if (!localStorage.getItem("highlightTour")) {
 
 function startTour() {
   driverObj.destroy();
-
-  if (!localStorage.getItem("setLaunchTour")) {
-    driver({
-      showProgress: true,
-      stagePadding: 3,
-      allowClose: false,
-      steps: [
-        {
-          element: "#date",
-          popover: {
-            title: "Date",
-            description: "Select date, When you are going to launch ",
-          },
-        },
-        {
-          element: "#time",
-          popover: {
-            title: "Time",
-            description: "Select time, When you are going to launch ",
-          },
-        },
-        {
-          element: "#submit",
-          popover: {
-            title: "Submit",
-            description: "Set Selected launch time and start Countdown",
-            onNextClick(element, step, opts) {
-              driver().moveNext();
-              localStorage.setItem("setLaunchTour", "true");
+  setTimeout(() => {
+    if (!localStorage.getItem("setLaunchTour") && isOverlayVisible) {
+      driver({
+        showProgress: true,
+        stagePadding: 3,
+        allowClose: false,
+        // disableActiveInteraction: true,
+        // onHighlighted(a, b, c) {
+        //   console.log(a);
+        //   console.log((b.popover.disableActiveInteraction = true));
+        //   console.log(c);
+        // },
+        steps: [
+          {
+            element: "#date",
+            popover: {
+              title: "Date",
+              description: "Select date, When you are going to launch ",
             },
           },
-        },
-      ],
-    }).drive();
-  }
+          {
+            element: "#time",
+            popover: {
+              title: "Time",
+              description: "Select time, When you are going to launch ",
+            },
+          },
+          {
+            element: "#submit",
+            popover: {
+              title: "Submit",
+              description: "Set Selected launch time and start Countdown",
+              onNextClick(element, step, opts) {
+                driver().moveNext();
+                localStorage.setItem("setLaunchTour", "true");
+              },
+            },
+          },
+        ],
+      }).drive();
+    }
+  }, 500);
 }
 
 //-------------- previous tries -----------------
