@@ -35,10 +35,10 @@ function setLaunchTime(event) {
   event.preventDefault();
   const date = event.target[0].value;
   const time = event.target[1].value;
-
   if (!date || !time) {
     alert("you have to fill all the input first");
   } else {
+    console.log(date, time);
     // const getLunchTime = localStorage.getItem("date-time");
     const formattedDate = convertUserInputTime(date + " " + time);
     if (Date.parse(formattedDate) >= Date.parse(new Date())) {
@@ -71,10 +71,10 @@ function setLaunchTime(event) {
     // console.log(event);
   }
 }
-
+let setLaunchingDate;
 function launchCountdown(endTime) {
   // here to set the launch date
-  const setLaunchingDate = Date.parse(endTime) - Date.parse(new Date());
+  setLaunchingDate = Date.parse(endTime) - Date.parse(new Date());
   if (setLaunchingDate >= 0) {
     // converting the date that we get from parse in to days, hour, second and minutes
     const launchRemainingDays = convertToDoubleDigit(
@@ -92,15 +92,6 @@ function launchCountdown(endTime) {
 
     // setting the timer into DOM
     daysElem.innerHTML = `${launchRemainingDays}`;
-
-    // if (launchRemainingSecond > 0) {
-    //   const seconds = (document.querySelector(".forFlip").innerHTML =
-    //     launchRemainingSecond);
-    // }
-
-    // const cssRuleDays = `.days::after {
-    //   content:'${launchRemainingDays}'
-    // }`;
 
     // days.style.content = launchRemainingDays;
     hoursElem.innerHTML = `${launchRemainingHour}`;
@@ -179,13 +170,9 @@ if (getLunchTime && Date.parse(getLunchTime) >= Date.parse(new Date())) {
 } else {
   launchCountDownStart("december 20,2023 13:30:60");
 }
-// }
-//  else {
-//   launchCountDownStart("december 20,2023 13:30:60");
-// }
 
 // ================== helper functions ====================
-
+// {
 // converting input time to parsing form
 function convertUserInputTime(getLunchTime) {
   const date = getLunchTime.split(" ")[0].split("-");
@@ -195,28 +182,50 @@ function convertUserInputTime(getLunchTime) {
   return formattedDate;
 }
 
-// to set 0 in single digit number
+// =========================== to set 0 in single digit number ====================================
 function convertToDoubleDigit(number) {
   return number.toString().padStart(2, "0");
 }
-
+// }
+// ================================ Toggling User Input Overlay ===================================
 const overlay = document.querySelector(".overlay");
 let isOverlayVisible = false;
+
 function toggleOverlay() {
   isOverlayVisible = !isOverlayVisible;
   if (!isOverlayVisible) {
     overlay.classList.add("invisible");
   } else {
+    // this block of code to set default value in input field as current date + 1 min
+    // {
+    const newDate = new Date();
+    const date = document.getElementById("date");
+    const time = document.getElementById("time");
+
+    const fullDate = `${newDate.getFullYear()}-${convertToDoubleDigit(
+      newDate.getMonth() + 1
+    )}-${convertToDoubleDigit(newDate.getDate())}`;
+
+    const fullTime = `${convertToDoubleDigit(
+      newDate.getHours()
+    )}:${convertToDoubleDigit(newDate.getMinutes() + 1)}`;
+
+    date.value = fullDate;
+    time.value = fullTime;
+    // }
+
+    // here we are removing the class hidden so the overlay will be visible
     overlay.classList.remove("invisible");
   }
 }
 
-// driver js
+// n===================================== driver js ============================================
 
 const driver = window.driver.js.driver;
 
 const driverObj = driver();
 
+// Showing Extra functionality with this tour
 function highlightTour() {
   driverObj.destroy();
   driverObj.setConfig({
@@ -237,12 +246,14 @@ function highlightTour() {
   });
 }
 
+// Starting Highlight tour on Initialization time of website
 if (!localStorage.getItem("highlightTour")) {
   setTimeout(() => {
     highlightTour();
   }, 800);
 }
 
+// User Input Tour
 function startTour() {
   driverObj.destroy();
   setTimeout(() => {
@@ -251,12 +262,6 @@ function startTour() {
         showProgress: true,
         stagePadding: 3,
         allowClose: false,
-        // disableActiveInteraction: true,
-        // onHighlighted(a, b, c) {
-        //   console.log(a);
-        //   console.log((b.popover.disableActiveInteraction = true));
-        //   console.log(c);
-        // },
         steps: [
           {
             element: "#date",
@@ -288,74 +293,3 @@ function startTour() {
     }
   }, 500);
 }
-
-//-------------- previous tries -----------------
-
-// let setSeconds = "10";
-// secondsElem.innerHTML = `<span> ${setSeconds}</span>`;
-// setInterval(() => {
-//   if (setSeconds && setSeconds !== "01") {
-//     setSeconds = convertToDoubleDigit(setSeconds).toString();
-//     secondsElem.innerHTML = `<span> ${setSeconds}</span>`;
-//   } else {
-//     setSeconds = 59;
-//     secondsElem.innerHTML = `<span> ${setSeconds}</span>`;
-//   }
-// }, 1000);
-
-// let days = 21;
-// let seconds = 60;
-// const hours = 24;
-
-// const a = Date.parse("september 15,2023 18:14:30") - Date.parse(new Date());
-
-// // seconds
-// console.log(Math.floor((a / 1000) % 60));
-// // minutes
-// console.log(Math.floor((a / 1000 / 60) % 60));
-// // Hours
-// console.log((a / (1000 * 60 * 60)) % 24);
-// // Days
-// console.log(a / (1000 * 60 * 60 * 24));
-
-// function launchCountdown() {
-//   const launchingDates = 14;
-//   const launchingHours = 24;
-//   const launchingMinutes = 60;
-//   const launchingSeconds = 60;
-
-//   const launchRemainingDays = convertToDoubleDigit(
-//     launchingDates - new Date().getDate()
-//   );
-
-//   const launchRemainingHour = convertToDoubleDigit(
-//     launchingHours - new Date().getHours()
-//   );
-//   const launchRemainingMinutes = convertToDoubleDigit(
-//     launchingMinutes - new Date().getMinutes()
-//   );
-//   const launchRemainingSecond = convertToDoubleDigit(
-//     launchingSeconds - new Date().getSeconds()
-//   );
-
-//   daysElem.innerHTML = `<span>${launchRemainingDays}</span>`;
-//   hoursElem.innerHTML = `<span>${launchRemainingHour}</span>`;
-//   minutesElem.innerHTML = `<span>${launchRemainingMinutes}</span>`;
-//   secondsElem.innerHTML = `<span>${launchRemainingSecond}</span>`;
-// }
-
-// setInterval(() => {
-//   launchCountdown();
-// }, 1000);
-
-// function convertToDoubleDigit(number) {
-//   if (number < 10) {
-//     // if (number < 0) {
-//     //   return "00";
-//     // } else {
-//     return "0" + number;
-//     // }
-//   } else {
-//     return number.toString();
-//   }
-// }

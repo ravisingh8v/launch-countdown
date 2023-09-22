@@ -80,20 +80,20 @@
             <!-- form  -->
             <form onsubmit="setLaunchTime(event)" action="" class="mt-2">
               <div>
+                <!-- onfocus="(this.type = 'date')"
+                onblur="(this.type ='text')" -->
                 <input
-                  type="text"
-                  onfocus="(this.type = 'date')"
-                  onblur="(this.type ='text')"
+                  type="date"
                   id="date"
                   placeholder="Set Date"
                   class="form-control"
                 />
               </div>
               <div class="mt-2">
+                <!-- onfocus="(this.type = 'time')"
+                onblur="(this.type ='text')" -->
                 <input
-                  onfocus="(this.type = 'time')"
-                  onblur="(this.type ='text')"
-                  type="text"
+                  type="time"
                   id="time"
                   placeholder="Set Time"
                   class="form-control"
