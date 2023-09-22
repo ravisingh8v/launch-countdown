@@ -168,6 +168,7 @@ const getLunchTime = localStorage.getItem("date-time");
 if (getLunchTime && Date.parse(getLunchTime) >= Date.parse(new Date())) {
   launchCountDownStart(getLunchTime);
 } else {
+  alert("testing on production ");
   launchCountDownStart("december 20,2023 13:30:60");
 }
 
