@@ -75,6 +75,7 @@ body::after {
   color: #8385a9;
   cursor: pointer;
 }
+
 .set-timer-container {
   width: 300px;
   z-index: 1000;
@@ -287,6 +288,10 @@ body::after {
 /* footer  */
 .social-link {
   margin-inline: 10px;
+  cursor: pointer;
+}
+.social-link:hover .icon {
+  fill: hsl(345, 95%, 68%);
 }
 footer {
   font-size: 10px;
