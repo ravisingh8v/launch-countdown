@@ -75,8 +75,8 @@ let setLaunchingDate;
 function launchCountdown(endTime) {
   // here to set the launch date
   setLaunchingDate = Date.parse(endTime) - Date.parse(new Date());
+  alert("this one work");
   if (setLaunchingDate >= 0) {
-    alert("this one work");
     // converting the date that we get from parse in to days, hour, second and minutes
     const launchRemainingDays = convertToDoubleDigit(
       Math.floor(setLaunchingDate / (1000 * 60 * 60 * 24))
